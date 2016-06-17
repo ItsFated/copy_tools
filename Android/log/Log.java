@@ -29,13 +29,13 @@ public final class Log {
     public boolean on = ON;
 
     /** 默认TAG="[LOG]"，默认打开日志记录 */
-    public L(){}
+    public Log(){}
     /** 改变日志的TAG */
-    public L(String tag){ this.tag = tag; }
+    public Log(String tag){ this.tag = tag; }
     /** 是否打开日志 */
-    public L(boolean on) { this.on = on; }
+    public Log(boolean on) { this.on = on; }
     /** 改变日志的TAG，是否打开日志记录 */
-    public L(String tag, boolean on){ this.tag = tag; this.on = on; }
+    public Log(String tag, boolean on){ this.tag = tag; this.on = on; }
 
     // /////////////////////////////////////////////////////////////////
     // ////实例相关记录方法 开始位置
