@@ -1,4 +1,4 @@
-package com.learn_faster.fasterui;
+package com.learn_faster.log;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -13,6 +13,7 @@ import static android.util.Log.println;
  * 日志类，用于代替TAG的存在
  * @author Jason
  */
+@SuppressWarnings("WeakerAccess")
 public final class Log {
     private static final String TAG = "[L-LOG]";
     /** 系统的行分隔符 */
@@ -125,12 +126,12 @@ public final class Log {
      */
     public static String objectsToString(Object... logMe){
         if(logMe == null) return OBJECTS_NULL;
-        StringBuilder message = new StringBuilder();
-        int i = 0;
-        while (i < logMe.length) {
-            message.append('[').append(i).append("]-> ").append(logMe[i++]).append(LINE_SEPARATOR);
-        }
-        return message.toString();
+        int len = logMe.length;
+        if (len > 0){
+            StringBuilder message = new StringBuilder();
+            for(int i =0; i<len; i++) message.append('[').append(i).append("]-> ").append(logMe[i]).append(LINE_SEPARATOR);
+            return message.toString();
+        } else return "{}";
     }
 
 }
