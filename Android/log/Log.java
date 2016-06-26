@@ -104,34 +104,32 @@ public final class Log {
 
 
     /**
-     * Change from {@link android.util.Log}<br/>
      * Handy function to get a loggable stack trace from a Throwable
      * @param tr An exception to log
      */
     public static String getStackTraceString(Throwable tr) {
-        if (tr == null) return LINE_SEPARATOR + THROW_NULL;
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        pw.append(LINE_SEPARATOR);
-        pw.append("[thr]-> ");
-        tr.printStackTrace(pw);
-        pw.close();
-        return sw.toString();
+    	if (tr == null) return LINE_SEPARATOR + THROW_NULL;
+    	StringWriter sw = new StringWriter();
+    	PrintWriter pw = new PrintWriter(sw);
+		pw.append(LINE_SEPARATOR);
+    	pw.append("[thr]-> ");
+		tr.printStackTrace(pw);
+		pw.close();
+    	return sw.toString();
     }
-
-    /**
-     * 将对象的 toString() 全部拼接起来
-     * @param logMe 许多对象
-     * @return 拼接好的字符串
-     */
-    public static String objectsToString(Object... logMe){
-        if(logMe == null) return OBJECTS_NULL;
-        int len = logMe.length;
-        if (len > 0){
-            StringBuilder message = new StringBuilder();
-            for(int i =0; i<len; i++) message.append('[').append(i).append("]-> ").append(logMe[i]).append(LINE_SEPARATOR);
-            return message.toString();
-        } else return "{}";
-    }
+	/**
+	 * 将对象的 toString() 全部拼接起来
+	 * @param logMe 许多对象
+	 * @return 拼接好的字符串
+	 */
+	public static String objectsToString(Object... logMe){
+		if(logMe == null) return OBJECTS_NULL;
+		int len = logMe.length;
+		if (len > 0) {
+			StringBuilder message = new StringBuilder();
+			for(int i =0; i<len; i++) message.append('[').append(i).append("]-> ").append(logMe[i]).append(LINE_SEPARATOR);
+			return message.toString();
+		} else return "{}";
+	}
 
 }

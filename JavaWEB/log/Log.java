@@ -1,8 +1,13 @@
-package com.learn.utils;
+package com.lf.db;
+
+import org.junit.Test;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * 日志类
@@ -38,61 +43,33 @@ public class Log {
 	// ////实例相关记录方法 开始位置
 	// /////////////////////////////////////////////////////////////////
 
-	public void v(Object... logMe) {
-		doLog(Level.VERBOSE, logMe);
-	}
+	public void v(Object... logMe) 				 { doLog(Level.VERBOSE, logMe); }
 
-	public void v(Throwable tr, Object... logMe) {
-		doLog(Level.VERBOSE, tr, logMe);
-	}
+	public void v(Throwable tr, Object... logMe) { doLog(Level.VERBOSE, tr, logMe); }
 
-	public void t(Object... logMe) {
-		doLog(Level.TRACE, logMe);
-	}
+	public void t(Object... logMe) 				 { doLog(Level.TRACE, logMe); }
 
-	public void t(Throwable tr, Object... logMe) {
-		doLog(Level.TRACE, tr, logMe);
-	}
+	public void t(Throwable tr, Object... logMe) { doLog(Level.TRACE, tr, logMe); }
 
-	public void d(Object... logMe) {
-		doLog(Level.DEBUG, logMe);
-	}
+	public void d(Object... logMe) 				 { doLog(Level.DEBUG, logMe); }
 
-	public void d(Throwable tr, Object... logMe) {
-		doLog(Level.DEBUG, tr, logMe);
-	}
+	public void d(Throwable tr, Object... logMe) { doLog(Level.DEBUG, tr, logMe); }
 
-	public void i(Object... logMe) {
-		doLog(Level.INFO, logMe);
-	}
+	public void i(Object... logMe) 				 { doLog(Level.INFO, logMe); }
 
-	public void i(Throwable tr, Object... logMe) {
-		doLog(Level.INFO, tr, logMe);
-	}
+	public void i(Throwable tr, Object... logMe) { doLog(Level.INFO, tr, logMe); }
 
-	public void e(Object... logMe) {
-		doLog(Level.ERROR, logMe);
-	}
+	public void e(Object... logMe) 				 { doLog(Level.ERROR, logMe); }
 
-	public void e(Throwable tr, Object... logMe) {
-		doLog(Level.ERROR, tr, logMe);
-	}
+	public void e(Throwable tr, Object... logMe) { doLog(Level.ERROR, tr, logMe); }
 
-	public void w(Object... logMe) {
-		doLog(Level.WARN, logMe);
-	}
+	public void w(Object... logMe) 				 { doLog(Level.WARN, logMe); }
 
-	public void w(Throwable tr, Object... logMe) {
-		doLog(Level.WARN, tr, logMe);
-	}
+	public void w(Throwable tr, Object... logMe) { doLog(Level.WARN, tr, logMe); }
 
-	public void f(Object... logMe) {
-		doLog(Level.FATAL, logMe);
-	}
+	public void f(Object... logMe) 				 { doLog(Level.FATAL, logMe); }
 
-	public void f(Throwable tr, Object... logMe) {
-		doLog(Level.FATAL, tr, logMe);
-	}
+	public void f(Throwable tr, Object... logMe) { doLog(Level.FATAL, tr, logMe); }
 	/**
 	 * 实例，记录日志的方法<br/>
 	 * 子类可以覆盖，自定义输出格式等等
@@ -100,7 +77,7 @@ public class Log {
 	 * @param logMe 内容
 	 */
 	protected void doLog(Level level, Object... logMe){ 
-		if(ON && on) System.out.println(timeString() + ' ' + level + ' ' + tag + objectsToString(logMe)); 
+		if(ON && on) System.out.print(timeString() + ' ' + level + ' ' + tag + objectsToString(logMe));
 	}
 	/**
 	 * 实例，记录日志的方法<br/>
@@ -110,7 +87,7 @@ public class Log {
 	 * @param logMe 内容
 	 */
 	protected void doLog(Level level, Throwable tr, Object... logMe){ 
-		if(ON && on) System.err.println(timeString() + ' ' + level + ' ' + tag + objectsToString(logMe) + getStackTraceString(tr)); 
+		if(ON && on) System.err.print(timeString() + ' ' + level + ' ' + tag + objectsToString(logMe) + getStackTraceString(tr));
 	}
 	/** 当前时间的字符串，子类可覆盖 */
 	protected String timeString(){
@@ -125,61 +102,33 @@ public class Log {
 	// ////类相关记录方法 开始位置
 	// /////////////////////////////////////////////////////////////////
 
-	public static void V(String tag, Object... logMe){
-		DOLOG(Level.VERBOSE, tag, logMe);
-	}
+	public static void V(String tag, Object... logMe)				{ DOLOG(Level.VERBOSE, tag, logMe); }
 	
-	public static void V(String tag, Throwable tr,Object... logMe){
-		DOLOG(Level.VERBOSE, tag, tr, logMe);
-	}
+	public static void V(String tag, Throwable tr,Object... logMe)	{ DOLOG(Level.VERBOSE, tag, tr, logMe); }
 
-	public static void T(String tag, Object... logMe){
-		DOLOG(Level.TRACE, tag, logMe);
-	}
+	public static void T(String tag, Object... logMe)				{ DOLOG(Level.TRACE, tag, logMe); }
 	
-	public static void T(String tag, Throwable tr,Object... logMe){
-		DOLOG(Level.TRACE, tag, tr, logMe);
-	}
+	public static void T(String tag, Throwable tr,Object... logMe)	{ DOLOG(Level.TRACE, tag, tr, logMe); }
 	
-	public static void D(String tag, Object... logMe){
-		DOLOG(Level.DEBUG, tag, logMe);
-	}
+	public static void D(String tag, Object... logMe)				{ DOLOG(Level.DEBUG, tag, logMe); }
 	
-	public static void D(String tag, Throwable tr,Object... logMe){
-		DOLOG(Level.DEBUG, tag, tr, logMe);
-	}
+	public static void D(String tag, Throwable tr,Object... logMe)	{ DOLOG(Level.DEBUG, tag, tr, logMe); }
 	
-	public static void I(String tag, Object... logMe){
-		DOLOG(Level.INFO, tag, logMe);
-	}
+	public static void I(String tag, Object... logMe)				{ DOLOG(Level.INFO, tag, logMe); }
 	
-	public static void I(String tag, Throwable tr,Object... logMe){
-		DOLOG(Level.INFO, tag, tr, logMe);
-	}
+	public static void I(String tag, Throwable tr,Object... logMe)	{ DOLOG(Level.INFO, tag, tr, logMe); }
 	
-	public static void E(String tag, Object... logMe){
-		DOLOG(Level.ERROR, tag, logMe);
-	}
+	public static void E(String tag, Object... logMe)				{ DOLOG(Level.ERROR, tag, logMe); }
 	
-	public static void E(String tag, Throwable tr,Object... logMe){
-		DOLOG(Level.ERROR, tag, tr, logMe);
-	}
+	public static void E(String tag, Throwable tr,Object... logMe)	{ DOLOG(Level.ERROR, tag, tr, logMe); }
 	
-	public static void W(String tag, Object... logMe){
-		DOLOG(Level.WARN, tag, logMe);
-	}
+	public static void W(String tag, Object... logMe)				{ DOLOG(Level.WARN, tag, logMe); }
 	
-	public static void W(String tag, Throwable tr,Object... logMe){
-		DOLOG(Level.WARN, tag, tr, logMe);
-	}
+	public static void W(String tag, Throwable tr,Object... logMe)	{ DOLOG(Level.WARN, tag, tr, logMe); }
 	
-	public static void F(String tag, Object... logMe){
-		DOLOG(Level.FATAL, tag, logMe);
-	}
+	public static void F(String tag, Object... logMe)				{ DOLOG(Level.FATAL, tag, logMe); }
 	
-	public static void F(String tag, Throwable tr,Object... logMe){
-		DOLOG(Level.FATAL, tag, tr, logMe);
-	}
+	public static void F(String tag, Throwable tr,Object... logMe)	{ DOLOG(Level.FATAL, tag, tr, logMe); }
 	
 	/**
 	 * 记录日志的方法
@@ -188,7 +137,7 @@ public class Log {
 	 * @param logMe 内容
 	 */
 	private static void DOLOG(Level LEVEL, String TAG, Object... logMe){ 
-		if(ON) System.out.println(TIME_STRING() + ' ' + LEVEL + ' ' + TAG + objectsToString(logMe)); 
+		if(ON) System.out.print(TIME_STRING() + ' ' + LEVEL + ' ' + TAG + objectsToString(logMe));
 	}
 	/**
 	 * 记录日志的方法
@@ -198,7 +147,7 @@ public class Log {
 	 * @param logMe 内容
 	 */
 	private static void DOLOG(Level LEVEL, String TAG, Throwable tr, Object... logMe){ 
-		if(ON) System.err.println(TIME_STRING() + ' ' + LEVEL + ' ' + TAG + objectsToString(logMe) + getStackTraceString(tr)); 
+		if(ON) System.err.print(TIME_STRING() + ' ' + LEVEL + ' ' + TAG + objectsToString(logMe) + getStackTraceString(tr));
 	}
     /** 获取当前时间的字符串，不怕多线程 */
     public static String TIME_STRING(){
@@ -212,35 +161,34 @@ public class Log {
 	
 	
     /**
-     * Change from {@link android.util.Log}<br/>
      * Handy function to get a loggable stack trace from a Throwable
      * @param tr An exception to log
      */
     public static String getStackTraceString(Throwable tr) {
-    	if (tr == null) return LINE_SEPARATOR + THROW_NULL;
+    	if (tr == null) return THROW_NULL + LINE_SEPARATOR;
     	StringWriter sw = new StringWriter();
     	PrintWriter pw = new PrintWriter(sw);
-    	pw.append(LINE_SEPARATOR);
     	pw.append("[thr]-> ");
-    	tr.printStackTrace(pw);
-    	pw.close();
+		tr.printStackTrace(pw);
+		pw.append(LINE_SEPARATOR);
+		pw.close();
     	return sw.toString();
     }
-    /**
-     * 将对象的 toString() 全部拼接起来
-     * @param logMe 许多对象
-     * @return 拼接好的字符串
-     */
-    public static String objectsToString(Object... logMe){
-    	if(logMe == null) return LINE_SEPARATOR + OBJECTS_NULL;
-    	StringBuilder message = new StringBuilder();
-    	int i = 0;
-    	while (i < logMe.length) {
-    		message.append(LINE_SEPARATOR).append('[').append(i).append("]-> ").append(logMe[i++]);
-    	}
-    	return message.toString();
-    }
-    
+	/**
+	 * 将对象的 toString() 全部拼接起来
+	 * @param logMe 许多对象
+	 * @return 拼接好的字符串
+	 */
+	public static String objectsToString(Object... logMe){
+		if(logMe == null) return OBJECTS_NULL + LINE_SEPARATOR;
+		int len = logMe.length;
+		if (len > 0) {
+			StringBuilder message = new StringBuilder();
+			for(int i =0; i<len; i++) message.append('[').append(i).append("]-> ").append(logMe[i]).append(LINE_SEPARATOR);
+			return message.toString();
+		} else return "{}" + LINE_SEPARATOR;
+	}
+
     /**
      * 日志的等级<br/>
      * <li> Verbose <p> 冗余日志，就看看，没卵用的日志
@@ -261,13 +209,9 @@ public class Log {
 		FATAL   ((byte) 6);
 		
 		byte level;
-		private Level(byte level){
-			this.level = level;
-		}
+		Level(byte level){ this.level = level; }
 		
 		@Override
-		public String toString() {
-			return "[ " + name() + '(' + level + ") ]";
-		}
+		public String toString() { return "[ " + name() + '(' + level + ") ]"; }
 	}
 }
