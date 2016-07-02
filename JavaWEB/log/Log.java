@@ -174,20 +174,31 @@ public class Log {
 		pw.close();
     	return sw.toString();
     }
-	/**
-	 * 将对象的 toString() 全部拼接起来
-	 * @param logMe 许多对象
-	 * @return 拼接好的字符串
-	 */
-	public static String objectsToString(Object... logMe){
-		if(logMe == null) return OBJECTS_NULL + LINE_SEPARATOR;
-		int len = logMe.length;
-		if (len > 0) {
-			StringBuilder message = new StringBuilder();
-			for(int i =0; i<len; i++) message.append('[').append(i).append("]-> ").append(logMe[i]).append(LINE_SEPARATOR);
-			return message.toString();
-		} else return "{}" + LINE_SEPARATOR;
-	}
+
+    /**
+     * 将对象的 toString() 全部拼接起来<br/>
+     * <ul>
+     *     <li>参数个数为奇数，第一个参数独占一行，后面的参数将以键值对形式拼接，拼接结果占一行</li>
+     *     <li>参数个数为偶数，参数将以键值对形式拼接，拼接结果占一行</li>
+     * </ul>
+     * @param builder 拼接字符串到此对象
+     * @param logMe 许多对象
+     * @return 拼接好的字符串
+     */
+    public static String pairedObjectsToString(StringBuilder builder, Object... logMe){
+        if(logMe == null) return OBJECTS_NULL;
+        int len = logMe.length;
+        if (len > 0){
+            if(builder == null) builder = new StringBuilder();
+            byte startIndex = 0;
+            if((len & 1) == 1) {
+                builder.append('[').append(startIndex++).append("]-> ").append(logMe[0]).append(LINE_SEPARATOR);
+            }
+            for (int i = startIndex; i<len; i++) builder.append('[').append(startIndex++).append("]-> ").append(logMe[i++]).append(" = [").append(logMe[i]).append(']').append(LINE_SEPARATOR);
+            return builder.toString();
+        } else return "{}";
+    }
+
 
     /**
      * 日志的等级<br/>

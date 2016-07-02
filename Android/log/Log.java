@@ -1,4 +1,4 @@
-package com.learn_faster.log;
+package com.learn_faster.fasterui;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -10,12 +10,18 @@ import static android.util.Log.VERBOSE;
 import static android.util.Log.WARN;
 import static android.util.Log.println;
 /**
- * 日志类，用于代替TAG的存在
+ * 日志类，用于代替TAG的存在<br/>
+ * AndroidStudio 中配合以下Live Template使用：
+ * <h4>log.i("$METHOD_NAME$()", $args$);</h4>
+ * <ul>
+ *     <li>$METHOD_NAME$ = methodName()</li>
+ *     <li>$args$ = groovyScript("'\"' + _1.collect { it + ' = [\" , ' + it + ' , \"]'}.join(', ') + '\"'", methodParameters())</li>
+ * </ul>
  * @author Jason
  */
 @SuppressWarnings("WeakerAccess")
 public final class Log {
-    private static final String TAG = "[L-LOG]";
+    private static final String TAG = "[LOG]";
     /** 系统的行分隔符 */
     private static final char LINE_SEPARATOR = '\n';
     /** Object... 参数为null时的替代字符串 */
@@ -91,11 +97,11 @@ public final class Log {
     public static void E(String tag, Throwable tr, Object... logMe) { if (ON) doLog(ERROR, tag, tr, logMe); }
 
     private static void doLog(int level, String tag, Object... log){
-        println(level, tag, objectsToString(log));
+        println(level, tag, pairedObjectsToString(null, log));
     }
 
     private static void doLog(int level, String tag, Throwable tr, Object... log){
-        println(level, tag, objectsToString(log) + getStackTraceString(tr));
+        println(level, tag, pairedObjectsToString(null, log) + getStackTraceString(tr));
     }
 
     // /////////////////////////////////////////////////////////////////
@@ -104,32 +110,43 @@ public final class Log {
 
 
     /**
+     * Change from {@link android.util.Log}<br/>
      * Handy function to get a loggable stack trace from a Throwable
      * @param tr An exception to log
      */
     public static String getStackTraceString(Throwable tr) {
-    	if (tr == null) return LINE_SEPARATOR + THROW_NULL;
-    	StringWriter sw = new StringWriter();
-    	PrintWriter pw = new PrintWriter(sw);
-		pw.append(LINE_SEPARATOR);
-    	pw.append("[thr]-> ");
-		tr.printStackTrace(pw);
-		pw.close();
-    	return sw.toString();
+        if (tr == null) return LINE_SEPARATOR + THROW_NULL;
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        pw.append(LINE_SEPARATOR);
+        pw.append("[thr]-> ");
+        tr.printStackTrace(pw);
+        pw.close();
+        return sw.toString();
     }
-	/**
-	 * 将对象的 toString() 全部拼接起来
-	 * @param logMe 许多对象
-	 * @return 拼接好的字符串
-	 */
-	public static String objectsToString(Object... logMe){
-		if(logMe == null) return OBJECTS_NULL;
-		int len = logMe.length;
-		if (len > 0) {
-			StringBuilder message = new StringBuilder();
-			for(int i =0; i<len; i++) message.append('[').append(i).append("]-> ").append(logMe[i]).append(LINE_SEPARATOR);
-			return message.toString();
-		} else return "{}";
-	}
+
+    /**
+     * 将对象的 toString() 全部拼接起来<br/>
+     * <ul>
+     *     <li>参数个数为奇数，第一个参数独占一行，后面的参数将以键值对形式拼接，拼接结果占一行</li>
+     *     <li>参数个数为偶数，参数将以键值对形式拼接，拼接结果占一行</li>
+     * </ul>
+     * @param builder 拼接字符串到此对象
+     * @param logMe 许多对象
+     * @return 拼接好的字符串
+     */
+    public static String pairedObjectsToString(StringBuilder builder, Object... logMe){
+        if(logMe == null) return OBJECTS_NULL;
+        int len = logMe.length;
+        if (len > 0){
+            if(builder == null) builder = new StringBuilder();
+            byte startIndex = 0;
+            if((len & 1) == 1) {
+                builder.append('[').append(startIndex++).append("]-> ").append(logMe[0]).append(LINE_SEPARATOR);
+            }
+            for (int i = startIndex; i<len; i++) builder.append('[').append(startIndex++).append("]-> ").append(logMe[i++]).append(" = [").append(logMe[i]).append(']').append(LINE_SEPARATOR);
+            return builder.toString();
+        } else return "{}";
+    }
 
 }
