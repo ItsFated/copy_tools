@@ -12,10 +12,10 @@ import static android.util.Log.println;
 /**
  * 日志类，用于代替TAG的存在<br/>
  * AndroidStudio 中配合以下Live Template使用：
- * <h4>log.i("$METHOD_NAME$()", $args$);</h4>
+ * <h4>log.w("$METHOD_NAME$() :" $args$);</h4>
  * <ul>
  *     <li>$METHOD_NAME$ = methodName()</li>
- *     <li>$args$ = groovyScript("'\"' + _1.collect { it + ' = [\" , ' + it + ' , \"]'}.join(', ') + '\"'", methodParameters())</li>
+ *     <li>$args$ = groovyScript("_1.collect {' ,\"' + it  + '\" , ' + it}.join('')", methodParameters())</li>
  * </ul>
  * @author Jason
  */
