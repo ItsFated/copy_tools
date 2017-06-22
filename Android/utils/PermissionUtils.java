@@ -17,8 +17,9 @@ public final class PermissionUtils {
      * @param callback 这个回调用连个方法，其中一个是Activity已经实现的{@link Activity#onRequestPermissionsResult(int, String[], int[])}，还有一个是提示用户以拒绝的权限
      * @param requestCode 请求授权的请求码
      * @param permissions 需要请求的权限
+     * @return 是否已经拥有了权限
      */
-    public static void request(Activity aty, RequestPermissionsResultCallback callback, int requestCode, String... permissions) {
+    public static boolean request(Activity aty, RequestPermissionsResultCallback callback, int requestCode, String... permissions) {
         final int len = permissions.length;
         String[] deniedPermissions = new String[len];
         int deniedCount = 0;
@@ -30,7 +31,7 @@ public final class PermissionUtils {
         }
 
         if (deniedCount == 0) {
-            return;
+            return true;
         }
 
         String[] temp = new String[deniedCount];
@@ -40,10 +41,11 @@ public final class PermissionUtils {
         for (int i = 0; i < deniedCount; i++) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(aty, deniedPermissions[i])) {
                 callback.shouldShowRequestPermissionRationale(requestCode, deniedPermissions);
-                return;
+                return false;
             }
         }
         ActivityCompat.requestPermissions(aty, deniedPermissions, requestCode);
+        return false;
     }
 
     private PermissionUtils(){}
