@@ -1,4 +1,4 @@
-package com.im_hero.livedemo;
+package com.goowi.avs_test.utility;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
@@ -39,7 +39,7 @@ public final class PermissionUtils {
 
         for (int i = 0; i < deniedCount; i++) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(aty, deniedPermissions[i])) {
-                callback.shouldShowRequestPermissionRationale(deniedPermissions);
+                callback.shouldShowRequestPermissionRationale(requestCode, deniedPermissions);
                 return;
             }
         }
@@ -53,7 +53,7 @@ public final class PermissionUtils {
          * 这个回调在申请用户已经拒绝过一次的权限时调用（以拒绝过的权限需要用户自己手动授权，无法在APP内授权）
          * @param deniedPermissions 所有被拒绝的权限
          */
-        void shouldShowRequestPermissionRationale(String[] deniedPermissions);
+        void shouldShowRequestPermissionRationale(int requestCode, String[] deniedPermissions);
 
         /**
          * 同 {@link Activity#onRequestPermissionsResult(int, String[], int[])}
