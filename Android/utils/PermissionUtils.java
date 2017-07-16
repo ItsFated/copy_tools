@@ -2,15 +2,13 @@ package com.im_hero.livedemo;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 
 /**
  * Runtime permission
  * @author Jason
  * @version 1.0
  */
-@RequiresApi(Build.VERSION_CODES.M)
 public final class PermissionUtils {
 
     /**
@@ -26,7 +24,7 @@ public final class PermissionUtils {
         int deniedCount = 0;
         //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < len; i++) {
-            if (aty.checkSelfPermission(permissions[i]) == PackageManager.PERMISSION_DENIED) {
+            if (ActivityCompat.checkSelfPermission(aty, permissions[i]) == PackageManager.PERMISSION_DENIED) {
                 deniedPermissions[deniedCount++] = permissions[i];
             }
         }
@@ -40,12 +38,12 @@ public final class PermissionUtils {
         deniedPermissions = temp;
 
         for (int i = 0; i < deniedCount; i++) {
-            if (aty.shouldShowRequestPermissionRationale(deniedPermissions[i])) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(aty, deniedPermissions[i])) {
                 callback.shouldShowRequestPermissionRationale(deniedPermissions);
                 return;
             }
         }
-        aty.requestPermissions(deniedPermissions, requestCode);
+        ActivityCompat.requestPermissions(aty, deniedPermissions, requestCode);
     }
 
     private PermissionUtils(){}
