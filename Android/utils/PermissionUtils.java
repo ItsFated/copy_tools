@@ -48,6 +48,20 @@ public final class PermissionUtils {
         return false;
     }
 
+    public static String[] filterDeniedPermissions(String[] permissions, int[] grantResults) {
+        if (permissions.length == grantResults.length) {
+            final int len = permissions.length;
+            ArrayList<String> permissionList = new ArrayList<>(len);
+            for (int i = 0; i < len; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                    permissionList.add(permissions[i]);
+                }
+            }
+            return permissionList.toArray(new String[permissionList.size()]);
+        } else throw new InvalidParameterException("length must be the same");
+    }
+
+
     private PermissionUtils(){}
 
     public interface RequestPermissionsResultCallback {
