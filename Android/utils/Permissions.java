@@ -1,4 +1,4 @@
-package com.goowi.common.java.permission;
+package com.goowi_tech.aceled.utils;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -308,9 +308,9 @@ public class Permissions {
     /**
      * 权限的三种状态
      * <ol>
-     *     <li>{@link Permissions.PermissionStatus#GRANTED}  已获取的权限</li>
-     *     <li>{@link Permissions.PermissionStatus#DENIED}  已拒绝的权限</li>
-     *     <li>{@link Permissions.PermissionStatus#SHOW_RATIONALE}  被用户拒绝过的权限，即需提醒权限</li>
+     *     <li>{@link PermissionStatus#GRANTED}  已获取的权限</li>
+     *     <li>{@link PermissionStatus#DENIED}  已拒绝的权限</li>
+     *     <li>{@link PermissionStatus#SHOW_RATIONALE}  被用户拒绝过的权限，即需提醒权限</li>
      * </ol>
      */
     public enum PermissionStatus {
@@ -384,10 +384,10 @@ public class Permissions {
      * 用于做获取请求权限结果的回调使用的Fragment
      */
     public static final class PermissionsFragment extends Fragment {
-        private WeakReference<Permissions> permissions;
+        private Permissions permissions;
 
         public PermissionsFragment setPermissions(Permissions permissions) {
-            this.permissions = new WeakReference<>(permissions);
+            this.permissions = permissions;
             return this;
         }
 
@@ -400,7 +400,7 @@ public class Permissions {
         @Override
         public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            Permissions p = this.permissions.get();
+            Permissions p = this.permissions;
             if (p != null) {
                 p.sendPermissions(requestCode, permissions, checkPermissions(p.activity, permissions));
                 p.activity.getFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
